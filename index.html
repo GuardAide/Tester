@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GuardAide Emergency</title>
+</head>
+<body style="text-align:center; font-family:sans-serif;">
+
+<h2>Emergency Location Sharing</h2>
+
+<button onclick="sendLocation('2528835397')" style="padding:15px; margin:10px;">
+Send Location to Emergency Contact
+</button>
+
+<button onclick="sendLocation('9194957362')" style="padding:15px; margin:10px;">
+Send Location to Backup Contact
+</button>
+
+<script>
+function sendLocation(phoneNumber) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+
+      var lat = position.coords.latitude;
+      var lon = position.coords.longitude;
+
+      var message = "I am with someone who may need help. Location: https://maps.google.com/?q=" + lat + "," + lon;
+
+      window.location.href = "sms:" + phoneNumber + "?body=" + encodeURIComponent(message);
+
+    }, function() {
+      alert("Please allow location access.");
+    });
+  } else {
+    alert("Location not supported.");
+  }
+}
+</script>
+
+</body>
+</html>
